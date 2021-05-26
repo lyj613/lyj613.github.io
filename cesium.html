@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<title>cesium map for gogle</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+		<link ref="stylesheet" type="text/css" href="./CesiumUnminified/Widgets/widgets.css">
+		
+		<style>
+			@import url(./CesiumUnminified/Widgets/widgets.css);
+			.cesium-widget-credits{            
+				display: none !important;/*去除Cesium默认版权信息*/      
+			}
+			
+			#mapEl{
+			
+				margin:auto;
+				height:100%;
+				width:100%;
+				position:fixed;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="mapEl"></div>
+		
+		<script type="text/javascript" src="./CesiumUnminified/Cesium.js" ></script>
+	
+		<script type="text/javascript">
+	
+		
+
+		(()=>{
+		
+			var guge=new Cesium.ArcGisMapServerImageryProvider({
+				 url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+				})
+			 
+		
+			console.log(Cesium.version)
+			var terrain=new Cesium.createWorldTerrain({           
+			 requestWaterMask:true,           
+			 requestVertexNormals:true       
+			});   
+
+
+			var viewer=new Cesium.Viewer("mapEl",{            	
+				animation:false,//左下角控制动画            
+				baseLayerPicker:false,//右上角图层选择器            
+				fullscreenButton:false,            
+				geocoder:false,//右上角搜索            
+				homeButton:false,            
+				infoBox:false,            
+				scene3DOnly:false,//仅仅显示3d,可隐藏右上角2d和3d按钮 
+				selectionoIndicatr:false,            
+				timeline:false,//最下面时间轴            
+				navigationHelpButton:false,//右上角帮助按钮 
+				navigationInstructionsInitiallyVisibl:false,            
+				useDefaultRenderLoop:true,            
+				showRenderLoopErrors:true,            
+				projectionPicker:false,//投影选择器     
+				imageryProvider : guge,
+				terrainProvider:terrain
+			});
+			
+			viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+            url: "http://webst02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8",
+//            layer: "tdtAnnoLayer",
+//            style: "default",
+//            format: "image/jpeg",
+//            tileMatrixSetID: "GoogleMapsCompatible"
+       		}));
+		})();
+		
+		
+	</script>
+	</body>
+	
+	
+	
+</html>
